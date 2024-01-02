@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Button, SafeAreaView, StyleSheet } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 const Screen = () => {
+  const navigation = useNavigation();
   const [token, setToken] = useState("");
 
   const fetchToken = async () => {
@@ -14,10 +16,11 @@ const Screen = () => {
     });
     const data = await response.json();
     setToken(data.access_token);
+    navigation.navigate('PetList');
   };
 
   return <SafeAreaView style={styles.container}>
-      <Button title="Fetch Token" onPress={fetchToken} />
+      <Button title="Get Started" onPress={fetchToken} />
     </SafeAreaView>;
 };
 
