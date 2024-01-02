@@ -1,64 +1,31 @@
-import React from "react"
-import {
-  View,
-  Image,
-  Text,
-  ScrollView,
-  SafeAreaView,
-  StyleSheet
-} from "react-native"
+import React, { useState } from "react";
+import { Button, SafeAreaView, StyleSheet } from "react-native";
 
-const WelcomeScreen = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <View style={styles.group} />
-        <View style={styles.group}>
-          <Image style={styles.logo} source={require("./logo.png")} />
-          <Text style={styles.text}>
-            Let's build something amazing together!
-          </Text>
-        </View>
-        <Text style={styles.footer}>Made with ❤️ by Crowdbotics</Text>
-      </ScrollView>
-    </SafeAreaView>
-  )
-}
+const Screen = () => {
+  const [token, setToken] = useState("");
+
+  const fetchToken = async () => {
+    const response = await fetch("https://api.petfinder.com/v2/oauth2/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: "grant_type=client_credentials&client_id=STiO2SlkIVygqlo3fbm9xa1ArLZ12ych47aWxxyizZ0V9Qmke4&client_secret=KeknUMacrZtftvr6FGB6U4PrgSLo7zI2NLmUcS0q"
+    });
+    const data = await response.json();
+    setToken(data.access_token);
+  };
+
+  return <SafeAreaView style={styles.container}>
+      <Button title="Fetch Token" onPress={fetchToken} />
+    </SafeAreaView>;
+};
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F8F8FC",
-    height: "100%"
-  },
-  scrollView: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 20
-  },
-  group: {
+    justifyContent: "center",
     alignItems: "center"
-  },
-  logo: {
-    height: 180,
-    width: 180,
-    padding: 40,
-    borderRadius: 30,
-    margin: 40
-  },
-  text: {
-    textAlign: "center",
-    fontSize: 28,
-    color: "#828AB0",
-    fontWeight: 700
-  },
-  footer: {
-    textAlign: "center",
-    fontSize: 18,
-    color: "#828AB0",
-    fontWeight: 700,
-    marginBottom: 20
   }
-})
-
-export default WelcomeScreen
+});
+export default Screen;
