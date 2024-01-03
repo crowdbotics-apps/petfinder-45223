@@ -10,8 +10,10 @@ const ProductsScreen = ({
   }, []);
 
   const handleProductClick = id => {
-    navigation.navigate("ProductDetail", {
-      id
+    fetch(`https://dummyjson.com/products/${id}`).then(response => response.json()).then(data => {
+      navigation.navigate("ProductDetail", {
+        product: data
+      });
     });
   };
 
@@ -20,11 +22,10 @@ const ProductsScreen = ({
       item
     }) => <TouchableOpacity style={styles.productCard} onPress={() => handleProductClick(item.id)}>
             <Image source={{
-        uri: "https://tinyurl.com/42evm3m3"
+        uri: item.thumbnail
       }} style={styles.productImage} />
             <View style={styles.productInfo}>
-              <Text style={styles.productName}>{item.name}</Text>
-              <Text style={styles.productPrice}>{item.price}</Text>
+              <Text style={styles.productName}>{item.title}</Text>
             </View>
           </TouchableOpacity>} />
     </SafeAreaView>;
@@ -54,10 +55,6 @@ const styles = StyleSheet.create({
   productName: {
     fontSize: 16,
     fontWeight: "bold"
-  },
-  productPrice: {
-    fontSize: 14,
-    color: "#888"
   }
 });
 export default ProductsScreen;
