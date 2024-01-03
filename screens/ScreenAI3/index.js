@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from "react-native";
 
 const ProductsScreen = ({
   navigation
 }) => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch('https://dummyjson.com/products').then(response => response.json()).then(data => setProducts(data));
+    fetch("https://dummyjson.com/products").then(response => response.json()).then(data => setProducts(data));
   }, []);
 
   const handleProductClick = id => {
-    navigation.navigate('ProductDetail', {
+    navigation.navigate("ProductDetail", {
       id
     });
   };
@@ -20,7 +20,7 @@ const ProductsScreen = ({
       item
     }) => <TouchableOpacity style={styles.productCard} onPress={() => handleProductClick(item.id)}>
             <Image source={{
-        uri: 'https://tinyurl.com/42evm3m3'
+        uri: "https://tinyurl.com/42evm3m3"
       }} style={styles.productImage} />
             <View style={styles.productInfo}>
               <Text style={styles.productName}>{item.name}</Text>
@@ -33,15 +33,15 @@ const ProductsScreen = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5'
+    backgroundColor: "#F5F5F5"
   },
   productCard: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     margin: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderRadius: 10,
-    overflow: 'hidden'
+    overflow: "hidden"
   },
   productImage: {
     width: 100,
@@ -53,11 +53,11 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: "bold"
   },
   productPrice: {
     fontSize: 14,
-    color: '#888'
+    color: "#888"
   }
 });
 export default ProductsScreen;
